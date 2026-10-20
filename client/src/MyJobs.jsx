@@ -11,7 +11,7 @@ function MyJobs() {
       return;
     }
 
-    fetch("http://localhost:5000/api/jobs")
+    fetch("https://job-finder-l7og.onrender.com/api/jobs")
       .then((response) => response.json())
       .then((data) => {
         const myJobs = data.filter(
@@ -24,7 +24,7 @@ function MyJobs() {
 
   const deleteJob = async (id) => {
     const response = await fetch(
-      `http://localhost:5000/api/jobs/${id}`,
+      `https://job-finder-l7og.onrender.com/api/jobs/${id}`,
       {
         method: "DELETE"
       }
@@ -86,7 +86,7 @@ function MyJobs() {
                 <button
                   onClick={() =>
                     window.location.href =
-                      `/edit-job?id=${job._id}`
+                    `/edit-job?id=${job._id}`
                   }
                 >
                   Edit Job

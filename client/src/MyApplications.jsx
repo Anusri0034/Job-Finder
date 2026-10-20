@@ -11,7 +11,7 @@ function MyApplications() {
       return;
     }
 
-    fetch(`http://localhost:5000/api/applications/user/${user.id}`)
+    fetch(`https://job-finder-l7og.onrender.com/api/applications/user/${user.id}`)
       .then((response) => response.json())
       .then((data) => {
         setApplications(data);

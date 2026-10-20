@@ -6,7 +6,7 @@ function EditJob() {
   const jobId = new URLSearchParams(window.location.search).get("id");
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/jobs")
+    fetch("https://job-finder-l7og.onrender.com/api/jobs")
       .then((response) => response.json())
       .then((data) => {
         const foundJob = data.find((item) => item._id === jobId);
@@ -25,7 +25,7 @@ function EditJob() {
     e.preventDefault();
 
     const response = await fetch(
-      `http://localhost:5000/api/jobs/${jobId}`,
+      `https://job-finder-l7og.onrender.com/api/jobs/${jobId}`,
       {
         method: "PUT",
         headers: {

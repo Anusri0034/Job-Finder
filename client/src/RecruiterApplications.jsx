@@ -12,7 +12,7 @@ function RecruiterApplications() {
     }
 
     fetch(
-      `http://localhost:5000/api/applications/recruiter/${user.id}`
+      `https://job-finder-l7og.onrender.com/api/applications/recruiter/${user.id}`
     )
       .then((response) => response.json())
       .then((data) => {

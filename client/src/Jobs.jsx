@@ -5,7 +5,7 @@ function Jobs() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/jobs")
+    fetch("https://job-finder-l7og.onrender.com/api/jobs")
       .then((response) => response.json())
       .then((data) => {
         setJobs(data);
@@ -31,7 +31,7 @@ function Jobs() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/applications/apply",
+        "https://job-finder-l7og.onrender.com/api/applications/apply",
         {
           method: "POST",
           headers: {
