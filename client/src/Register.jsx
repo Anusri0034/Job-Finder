@@ -16,37 +16,40 @@ function Register() {
         });
     };
 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const response = await fetch(
-            "https://job-finder-l7og.onrender.com/api/auth/register",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(formData)
-            }
-        );
-
-        const data = await response.json();
-
-        alert(data.message);
-
-        if (response.ok) {
-            localStorage.setItem(
-                "user",
-                JSON.stringify(data.user)
+        try {
+            const response = await fetch(
+                "https://job-finder-l7og.onrender.com/api/auth/register",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(formData)
+                }
             );
 
-            if (data.user.role === "jobseeker") {
-                window.location.href = "/job-seeker";
-            } else if (data.user.role === "recruiter") {
-                window.location.href = "/recruiter";
+            const data = await response.json();
+
+            alert(data.message || "Registration response received");
+
+            if (response.ok) {
+                localStorage.setItem("user", JSON.stringify(data.user));
+
+                if (data.user.role === "jobseeker") {
+                    window.location.href = "/job-seeker";
+                } else if (data.user.role === "recruiter") {
+                    window.location.href = "/recruiter";
+                }
             }
+        } catch (error) {
+            alert("Server connection failed. Please try again.");
         }
     };
+
 
     return (
         <div className="auth-page">

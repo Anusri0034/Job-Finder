@@ -14,81 +14,84 @@ function Login() {
     });
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch(
-      "https://job-finder-l7og.onrender.com/api/auth/login",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formData)
-      }
-    );
-
-    const data = await response.json();
-
-    alert(data.message);
-
-    if (response.ok) {
-      localStorage.setItem(
-        "user",
-        JSON.stringify(data.user)
+    try {
+      const response = await fetch(
+        "https://job-finder-l7og.onrender.com/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(formData)
+        }
       );
 
-      if (data.user.role === "jobseeker") {
-        window.location.href = "/job-seeker";
-      } else if (data.user.role === "recruiter") {
-        window.location.href = "/recruiter";
+      const data = await response.json();
+
+      alert(data.message || "Login response received");
+
+      if (response.ok) {
+        localStorage.setItem("user", JSON.stringify(data.user));
+
+        if (data.user.role === "jobseeker") {
+          window.location.href = "/job-seeker";
+        } else if (data.user.role === "recruiter") {
+          window.location.href = "/recruiter";
+        }
       }
+    } catch (error) {
+      alert("Server connection failed. Please try again.");
     }
   };
 
-  return (
-    <div className="auth-page">
-      <div className="auth-box">
-        <h2>Login</h2>
 
-        <form onSubmit={handleSubmit}>
+return (
+  <div className="auth-page">
+    <div className="auth-box">
+      <h2>Login</h2>
+
+      <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+
+        <div className="password-box">
           <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
+            type={showPassword ? "text" : "password"}
+            name="password"
+            placeholder="Password"
+            value={formData.password}
             onChange={handleChange}
             required
           />
 
-          <div className="password-box">
-            <input
-              type={showPassword ? "text" : "password"}
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
+          <button
+            type="button"
+            className="eye-button"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? "🙈" : "👁️"}
+          </button>
+        </div>
 
-            <button
-              type="button"
-              className="eye-button"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? "🙈" : "👁️"}
-            </button>
-          </div>
+        <button type="submit">Login</button>
+      </form>
 
-          <button type="submit">Login</button>
-        </form>
-
-        <p>
-          Don't have an account? <a href="/register">Register</a>
-        </p>
-      </div>
+      <p>
+        Don't have an account? <a href="/register">Register</a>
+      </p>
     </div>
-  );
+  </div>
+);
 }
 
 export default Login;
